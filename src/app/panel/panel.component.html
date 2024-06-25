@@ -1,0 +1,14 @@
+<section class="text-end">
+  <div class="mb-3">
+    <label for="webPages">Nombre de pàgines</label>
+    <button type="button" (click)="decrementPages()"><i class="bi bi-dash-circle"></i></button>
+    <input id="webPages" type="number" [value]="numPages()" min="1" readonly>
+    <button type="button" (click)="incrementPages()"><i class="bi bi-plus-circle"></i></button>
+  </div>
+  <div>
+    <label for="numLanguages">Nombre de llenguatges</label>
+    <button type="button" (click)="decrementLanguages()"><i class="bi bi-dash-circle"></i></button>
+    <input id="numLanguages" type="number" [value]="numLanguages()" min="1" readonly>
+    <button type="button" (click)="incrementLanguages()"><i class="bi bi-plus-circle"></i></button>
+  </div>
+</section>
