@@ -15,7 +15,7 @@
               <input id="{{ product.controlName }}" type="checkbox" [formControlName]="product.controlName"/>
               Afegir
             </div>
-            @if (product.controlName == 'web' && budgetForm.controls['web'].value) {
+            @if (product.controlName === 'web' && budgetForm.controls['web'].value) {
               <app-panel 
                 [numPages]="numPages" 
                 [numLanguages]="numLanguages" 
@@ -28,7 +28,7 @@
       } 
     </form>
     <div class="p-5 text-end">
-      <h2><b>Preu pressuposat: {{ totalPrice() }}€</b></h2>
+      <h2><b>Preu presuposat: {{ totalPrice() }}€</b></h2>
     </div>
   </div>
 </div>

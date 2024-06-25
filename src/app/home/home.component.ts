@@ -43,11 +43,13 @@ export class HomeComponent implements OnInit {
   onNumPagesChange(pages: number) {
     this.numPages.set(pages);
     this.updateTotalPrice();
+    this.resetWebPanel();
   }
 
   onNumLanguagesChange(languages: number) {
     this.numLanguages.set(languages);
     this.updateTotalPrice();
+    this.resetWebPanel();
   }
 
   private updateTotalPrice() {
@@ -57,5 +59,10 @@ export class HomeComponent implements OnInit {
       productSelections: this.formValues()
     };
     this.totalPrice.set(this.budgetService.calculateTotal(budget));
+  }
+
+  private resetWebPanel() {
+    this.numPages.set(1);
+    this.numLanguages.set(1);
   }
 }
