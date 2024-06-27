@@ -34,22 +34,23 @@ export class HomeComponent implements OnInit {
 
     this.budgetForm.valueChanges.subscribe(values => {
       this.formValues.set(values);
+      
+      if (!values['web']) {
+        this.resetWebPanel();
+      }
+
       this.updateTotalPrice();
     });
-
-    this.updateTotalPrice();
   }
 
   onNumPagesChange(pages: number) {
     this.numPages.set(pages);
     this.updateTotalPrice();
-    this.resetWebPanel();
   }
 
   onNumLanguagesChange(languages: number) {
     this.numLanguages.set(languages);
     this.updateTotalPrice();
-    this.resetWebPanel();
   }
 
   private updateTotalPrice() {
