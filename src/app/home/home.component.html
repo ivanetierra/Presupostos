@@ -16,9 +16,7 @@
               Afegir
             </div>
             @if (product.controlName === 'web' && budgetForm.controls['web'].value) {
-              <app-panel 
-                [numPages]="numPages" 
-                [numLanguages]="numLanguages" 
+              <app-panel
                 (numPagesChange)="onNumPagesChange($event)" 
                 (numLanguagesChange)="onNumLanguagesChange($event)">
               </app-panel>
