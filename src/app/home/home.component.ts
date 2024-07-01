@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { BudgetService } from '../services/budget.service';
 import { Product } from '../models/product';
@@ -22,6 +22,12 @@ export class HomeComponent implements OnInit {
   numLanguages = signal(1);
 
   totalPrice = signal(0);
+
+  budgetInfo = new FormGroup({
+    name: new FormControl('', Validators.required),
+    phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(9)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
 
   constructor(private productService: ProductService, private budgetService: BudgetService) { }
 
