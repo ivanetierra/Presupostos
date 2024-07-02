@@ -14,6 +14,7 @@ import { Budget } from '../models/budget';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   products!: Product[];
   budgetForm: FormGroup = new FormGroup({});
   formValues = signal(this.budgetForm.value);
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit {
   numLanguages = signal(1);
 
   totalPrice = signal(0);
+
+  budgets= signal<Budget[]>([]);
 
   budgetInfo = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -40,7 +43,7 @@ export class HomeComponent implements OnInit {
 
     this.budgetForm.valueChanges.subscribe(values => {
       this.formValues.set(values);
-      
+
       if (!values['web']) {
         this.resetWebPanel();
       }
@@ -71,5 +74,16 @@ export class HomeComponent implements OnInit {
   private resetWebPanel() {
     this.numPages.set(1);
     this.numLanguages.set(1);
+  }
+
+  addBudget(): void {
+    const budget = {
+      ...this.budgetForm.value,
+      name: this.budgetInfo.value.name,
+      phone: this.budgetInfo.value.phone,
+      email: this.budgetInfo.value.email,
+      total: this.totalPrice()
+    };
+    this.budgetService.addBudget(budget);
   }
 }

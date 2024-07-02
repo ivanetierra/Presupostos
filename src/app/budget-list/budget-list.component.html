@@ -1,1 +1,14 @@
-<p>budget-list works!</p>
+<div class="container">
+  @for (budget of budgets; track $index) {
+    <div class="col-md-12">
+      <div class="card m-3 p-3">
+        <h4>{{ budget.name }}</h4>
+        <p>Telèfon: {{ budget.phone }}</p>
+        <p>Email: {{ budget.email }}</p>
+        <p>Preu Total: {{ budget.total }}€</p>
+      </div>
+    </div>
+  }
+</div>
+
+

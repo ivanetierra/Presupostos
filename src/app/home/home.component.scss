@@ -2,8 +2,13 @@ label, input {
     cursor: pointer;
 }
 
-.card:hover {
-    background-color: #f9f9f9;
-    border: 3px solid #b1b1b1;
+.card {
+  border: 3px solid transparent;
+
+  &:hover {
+      background-color: #f9f9f9;
+      border-color: #b1b1b1;
+  }
 }
+
 

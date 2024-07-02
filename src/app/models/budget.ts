@@ -5,4 +5,5 @@ export interface Budget {
     name?: string;
     email?: string;
     phone?: string;
+    total?: number;
 }

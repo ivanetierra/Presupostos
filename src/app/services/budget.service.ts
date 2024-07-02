@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Budget } from '../models/budget';
 import { ProductService } from './product.service';
 
@@ -16,5 +16,15 @@ export class BudgetService {
 
     const extraCost = (budget.numPages - 1 + budget.numLanguages - 1) * 30;
     return selectedProductsTotal + extraCost;
+  }
+
+  budgets= signal<Budget[]>([]);
+
+  addBudget(budget: Budget): void {
+    this.budgets.update(budgets => [...budgets, budget]);
+  }
+
+  getBudgets(): Budget[] {
+    return this.budgets();
   }
 }
