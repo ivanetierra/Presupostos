@@ -24,13 +24,14 @@ export class HomeComponent implements OnInit {
 
   totalPrice = signal(0);
 
-  budgets= signal<Budget[]>([]);
 
   budgetInfo = new FormGroup({
     name: new FormControl('', Validators.required),
     phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(9)]),
     email: new FormControl('', [Validators.required, Validators.email]),
   });
+
+  budgets= signal<Budget[]>([]);
 
   constructor(private productService: ProductService, private budgetService: BudgetService) { }
 
@@ -79,6 +80,8 @@ export class HomeComponent implements OnInit {
   addBudget(): void {
     const budget = {
       ...this.budgetForm.value,
+      numPages: this.numPages(),
+      numLanguages: this.numLanguages(),
       name: this.budgetInfo.value.name,
       phone: this.budgetInfo.value.phone,
       email: this.budgetInfo.value.email,
