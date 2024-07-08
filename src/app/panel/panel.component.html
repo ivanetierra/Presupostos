@@ -1,53 +1,93 @@
 <section class="text-end">
   <div class="mb-3">
-    <button type="button" data-bs-toggle="modal" data-bs-target="#modal1"><i class="bi bi-info-circle"></i></button>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#modal1">
+      <i class="bi bi-info-circle"></i>
+    </button>
     <label for="webPages">Nombre de pàgines</label>
-    <button type="button" (click)="decrementPages()"><i class="bi bi-dash-circle"></i></button>
-    <input id="webPages" type="number" [value]="numPages()" min="1" readonly>
-    <button type="button" (click)="incrementPages()"><i class="bi bi-plus-circle"></i></button>
+    <button type="button" (click)="decrementPages()">
+      <i class="bi bi-dash-circle"></i>
+    </button>
+    <input id="webPages" type="number" [value]="numPages()" min="1" readonly />
+    <button type="button" (click)="incrementPages()">
+      <i class="bi bi-plus-circle"></i>
+    </button>
   </div>
   <div>
-    <button type="button" data-bs-toggle="modal" data-bs-target="#modal2"><i class="bi bi-info-circle"></i></button>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#modal2">
+      <i class="bi bi-info-circle"></i>
+    </button>
     <label for="numLanguages">Nombre de llenguatges</label>
-    <button type="button" (click)="decrementLanguages()"><i class="bi bi-dash-circle"></i></button>
-    <input id="numLanguages" type="number" [value]="numLanguages()" min="1" readonly>
-    <button type="button" (click)="incrementLanguages()"><i class="bi bi-plus-circle"></i></button>
+    <button type="button" (click)="decrementLanguages()">
+      <i class="bi bi-dash-circle"></i>
+    </button>
+    <input
+      id="numLanguages"
+      type="number"
+      [value]="numLanguages()"
+      min="1"
+      readonly
+    />
+    <button type="button" (click)="incrementLanguages()">
+      <i class="bi bi-plus-circle"></i>
+    </button>
   </div>
 </section>
 
 <!-- Modals -->
-<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modal1"
+  tabindex="-1"
+  aria-labelledby="modal1"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content text-center">
       <div class="modal-header">
-        <h5 class="modal-title text-center w-100" id="exampleModalLabel">Numero de llenguatges</h5>
+        <h5 class="modal-title text-center w-100" id="exampleModalLabel">
+          Numero de llenguatges
+        </h5>
       </div>
       <div class="modal-body">
-        Afegeix els llenguatges qur tindra el teu projecte.<br>
+        Afegeix els llenguatges qur tindra el teu projecte.<br />
         El cost de cada llenguatge es de 30€.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modal2"
+  tabindex="-1"
+  aria-labelledby="modal2"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Numero de pagines</h5>
       </div>
       <div class="modal-body">
-        Afegeix les pagines que tindra el teu projecte.<br>
+        Afegeix les pagines que tindra el teu projecte.<br />
         El cost de cada pagina es de 30€.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
     </div>
   </div>
 </div>
-
-

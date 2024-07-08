@@ -2,31 +2,43 @@
   <div class="col-md-8 mx-auto">
     <form [formGroup]="budgetForm">
       @for (product of products; track product.title) {
-        <label class="card m-3 p-5 rounded-5 shadow fw-bold">
-          <div class="row align-items-center">
-            <div class="col-sm-6 text-center text-sm-start">
-              <h3><b>{{ product.title }}</b></h3>
-              <p>{{product.description}}</p>
-            </div>
-            <div class="col-6 col-sm-4 text-center">
-              <h2><b>{{ product.price }}€</b></h2>
-            </div>
-            <div class="col-6 col-sm-2 text-center">
-              <input type="checkbox" [formControlName]="product.controlName"/>
-              Afegir
-            </div>
-            @if (product.controlName === 'web' && budgetForm.controls['web'].value) {
-              <app-panel
-                (numPagesChange)="onNumPagesChange($event)"
-                (numLanguagesChange)="onNumLanguagesChange($event)">
-              </app-panel>
-            }
+      <div
+        class="card m-3 p-5 rounded-5 shadow fw-bold"
+        (click)="changeCheckboxValue(product.controlName)"
+      >
+        <div class="row align-items-center">
+          <div class="col-sm-6 text-center text-sm-start">
+            <h3>
+              <b>{{ product.title }}</b>
+            </h3>
+            <p>{{ product.description }}</p>
           </div>
-        </label>
+          <div class="col-6 col-sm-4 text-center">
+            <h2>
+              <b>{{ product.price }}€</b>
+            </h2>
+          </div>
+          <div class="col-6 col-sm-2 text-center">
+            <input type="checkbox" [formControlName]="product.controlName" />
+            Afegir
+          </div>
+          @if (product.controlName === 'web' &&
+          budgetForm.controls['web'].value) {
+          <app-panel
+            (click)="$event.stopPropagation()"
+            (numPagesChange)="onNumPagesChange($event)"
+            (numLanguagesChange)="onNumLanguagesChange($event)"
+          >
+          </app-panel>
+          }
+        </div>
+      </div>
       }
     </form>
     <div class="p-5 text-end">
-      <h2><b>Preu presuposat: {{ totalPrice() }}€</b></h2>
+      <h2>
+        <b>Preu presuposat: {{ totalPrice() }}€</b>
+      </h2>
     </div>
   </div>
 
@@ -42,35 +54,79 @@
           <div class="row mt-3">
             <div class="col-12 col-md-9 d-flex flex-column flex-md-row gap-2">
               <div class="col">
-                <input type="text" name="name" id="name" placeholder="Nom" class="form-control" required formControlName="name" autocomplete="given-name"
-                [class.is-invalid]="budgetInfo.controls.name.invalid && budgetInfo.controls.name.touched"/>
-                @if (budgetInfo.get('name')?.invalid && budgetInfo.get('name')?.touched) {
-                  @if (budgetInfo.get('name')?.errors) {
-                    <div class="invalid-feedback">Name is required.</div>
-                  }
-                }
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Nom"
+                  class="form-control"
+                  required
+                  formControlName="name"
+                  autocomplete="given-name"
+                  [class.is-invalid]="
+                    budgetInfo.controls.name.invalid &&
+                    budgetInfo.controls.name.touched
+                  "
+                />
+                @if (budgetInfo.get('name')?.invalid &&
+                budgetInfo.get('name')?.touched) { @if
+                (budgetInfo.get('name')?.errors) {
+                <div class="invalid-feedback">Name is required.</div>
+                } }
               </div>
               <div class="col">
-                <input type="tel" name="phone" id="phone" placeholder="Telèfon" class="form-control" required formControlName="phone" autocomplete="phone"
-                [class.is-invalid]="budgetInfo.controls.phone.invalid && budgetInfo.controls.phone.touched "/>
-                @if (budgetInfo.get('phone')?.invalid && budgetInfo.get('phone')?.touched) {
-                  @if (budgetInfo.get('phone')?.errors) {
-                    <div class="invalid-feedback">Phone should have 9 digits</div>
-                  }
-                }
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  placeholder="Telèfon"
+                  class="form-control"
+                  required
+                  formControlName="phone"
+                  autocomplete="phone"
+                  [class.is-invalid]="
+                    budgetInfo.controls.phone.invalid &&
+                    budgetInfo.controls.phone.touched
+                  "
+                />
+                @if (budgetInfo.get('phone')?.invalid &&
+                budgetInfo.get('phone')?.touched) { @if
+                (budgetInfo.get('phone')?.errors) {
+                <div class="invalid-feedback">Phone should have 9 digits</div>
+                } }
               </div>
               <div class="col">
-                <input type="email" name="email" id="email" placeholder="Email" class="form-control" required formControlName="email" autocomplete="email"
-                [class.is-invalid]="budgetInfo.controls.email.invalid && budgetInfo.controls.email.touched "/>
-                @if (budgetInfo.get('email')?.invalid && budgetInfo.get('email')?.touched) {
-                  @if (budgetInfo.get('email')?.errors) {
-                    <div class="invalid-feedback">enter a valid email</div>
-                  }
-                }
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  class="form-control"
+                  required
+                  formControlName="email"
+                  autocomplete="email"
+                  [class.is-invalid]="
+                    budgetInfo.controls.email.invalid &&
+                    budgetInfo.controls.email.touched
+                  "
+                />
+                @if (budgetInfo.get('email')?.invalid &&
+                budgetInfo.get('email')?.touched) { @if
+                (budgetInfo.get('email')?.errors) {
+                <div class="invalid-feedback">enter a valid email</div>
+                } }
               </div>
             </div>
-            <div class="col-12 col-md-3 d-flex justify-content-center justify-content-md-start mt-2 mt-md-0">
-              <button class="btn btn-success px-4 "style="height: fit-content" (click)="addBudget()">Demanar</button>
+            <div
+              class="col-12 col-md-3 d-flex justify-content-center justify-content-md-start mt-2 mt-md-0"
+            >
+              <button
+                class="btn btn-success px-4"
+                style="height: fit-content"
+                (click)="addBudget()"
+              >
+                Demanar
+              </button>
             </div>
           </div>
         </div>

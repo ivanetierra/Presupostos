@@ -4,6 +4,7 @@ import {
   FormControl,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { BudgetService } from '../services/budget.service';
@@ -20,14 +21,7 @@ import { Budget, Selection } from '../models/budget';
 })
 export class HomeComponent implements OnInit {
   products!: Product[];
-  budgetForm = new FormGroup({
-    web: new FormControl(false),
-    seo: new FormControl(false),
-    ads: new FormControl(false),
-    numPages: new FormControl(1),
-    numLanguages: new FormControl(1),
-  });
-  formValues = signal(this.budgetForm.value);
+  budgetForm: FormGroup = new FormGroup({});
 
   totalPrice = signal(0);
 
@@ -48,42 +42,50 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.products = this.productService.getProducts();
+    this.products.forEach((product) => {
+      this.budgetForm.addControl(product.controlName, new FormControl(false));
+      if (product.controlName === 'web') {
+        this.budgetForm.addControl('numPages', new FormControl(1));
+        this.budgetForm.addControl('numLanguages', new FormControl(1));
+      }
+    });
 
-    this.budgetForm.valueChanges.subscribe((values) => {
-      this.formValues.set(values);
-
-      if (!values['web']) {
+    this.budgetForm.controls['web'].valueChanges.subscribe((value) => {
+      if (!value) {
         this.resetWebPanel();
       }
-
       this.updateTotalPrice();
     });
   }
 
+  changeCheckboxValue(control: string) {
+const checkbox = this.budgetForm.controls[control];
+    checkbox.setValue(!checkbox.value);
+  }
   onNumPagesChange(pages: number) {
-    this.budgetForm.controls.numPages.setValue(pages);
+    this.budgetForm.controls['numPages'].setValue(pages);
     this.updateTotalPrice();
   }
 
   onNumLanguagesChange(languages: number) {
-    this.budgetForm.controls.numLanguages.setValue(languages);
+    this.budgetForm.controls['numLanguages'].setValue(languages);
     this.updateTotalPrice();
   }
 
   private updateTotalPrice() {
     const selction: Selection = {
-      numPages: this.budgetForm.controls.numPages.value || 1,
-      numLanguages: this.budgetForm.controls.numLanguages.value || 1,
-      seo: this.budgetForm.controls.seo.value || false,
-      web: this.budgetForm.controls.web.value || false,
-      ads: this.budgetForm.controls.ads.value || false,
+      numPages: this.budgetForm.controls['numPages'].value || 1,
+      numLanguages: this.budgetForm.controls['numLanguages'].value || 1,
+      seo: this.budgetForm.controls['seo'].value || false,
+      web: this.budgetForm.controls['web'].value || false,
+      ads: this.budgetForm.controls['ads'].value || false,
     };
     this.totalPrice.set(this.budgetService.calculateTotal(selction));
   }
 
   private resetWebPanel() {
-    this.budgetForm.controls.numLanguages.setValue(1);
-    this.budgetForm.controls.numPages.setValue(1);
+    this.budgetForm.controls['numLanguages'].setValue(1);
+    this.budgetForm.controls['numPages'].setValue(1);
   }
 
   addBudget(): void {
@@ -103,3 +105,4 @@ export class HomeComponent implements OnInit {
     this.budgetService.addBudget(budget);
   }
 }
+
