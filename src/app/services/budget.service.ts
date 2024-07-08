@@ -1,5 +1,5 @@
-import { Injectable, signal } from '@angular/core';
-import { Budget } from '../models/budget';
+import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { Budget , Selection} from '../models/budget';
 import { ProductService } from './product.service';
 
 @Injectable({
@@ -8,23 +8,30 @@ import { ProductService } from './product.service';
 export class BudgetService {
   constructor(private productService: ProductService) { }
 
-  calculateTotal(budget: Budget): number {
+  calculateTotal(selection: Selection): number {
     const products = this.productService.getProducts();
-    const selectedProductsTotal = products
-      .filter(product => budget.productSelections[product.controlName])
-      .reduce((total, product) => total + product.price, 0);
+    let selectedProductsTotal = 0;
+    if(selection.ads) selectedProductsTotal += products[0].price; 
+    if(selection.seo) selectedProductsTotal += products[1].price; 
+    if(selection.web) {
+      selectedProductsTotal += products[2].price;
+      const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;
+      selectedProductsTotal += extraCost;
+    } 
 
-    const extraCost = (budget.numPages - 1 + budget.numLanguages - 1) * 30;
-    return selectedProductsTotal + extraCost;
+    console.log("products",products);
+
+    return selectedProductsTotal;
   }
 
   budgets= signal<Budget[]>([]);
-
+  
   addBudget(budget: Budget): void {
     this.budgets.update(budgets => [...budgets, budget]);
   }
 
-  getBudgets(): Budget[] {
-    return this.budgets();
+  getBudgets(): Signal<Budget[]> {
+    return computed(this.budgets)
   }
+
 }

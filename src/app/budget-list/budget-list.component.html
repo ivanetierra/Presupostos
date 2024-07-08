@@ -1,14 +1,23 @@
 <div class="container">
-  @for (budget of budgets; track $index) {
-    <div class="col-md-12">
-      <div class="card m-3 p-3">
-        <h4>{{ budget.name }}</h4>
-        <p>Telèfon: {{ budget.phone }}</p>
-        <p>Email: {{ budget.email }}</p>
-        <p>Preu Total: {{ budget.total }}€</p>
-      </div>
+  @for (budget of budgets(); track $index) {
+  <div class="col-md-12">
+    <div class="card m-3 p-3">
+      <h4>Nom: {{ budget.contact.name }}</h4>
+      <p>Telèfon: {{ budget.contact.phone }}</p>
+      <p>Email: {{ budget.contact.email }}</p>
+      @if (budget.selection.seo) {
+      <p>SEO: {{ budget.selection.seo }}</p>
+      } @if (budget.selection.ads) {
+      <p>Ads: {{ budget.selection.ads }}</p>
+      } @if (budget.selection.web) {
+      <p>Web: {{ budget.selection.web }}</p>
+      @if (budget.selection.numPages) {
+      <p>Num. Pàgines: {{ budget.selection.numPages }}</p>
+      } @if (budget.selection.numLanguages) {
+      <p>Num. Llenguatges: {{ budget.selection.numLanguages }}</p>
+      } }
+      <p>Preu Total: {{ budget.total }}€</p>
     </div>
+  </div>
   }
 </div>
-
-

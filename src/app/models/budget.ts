@@ -1,9 +1,19 @@
+export interface Selection {
+  numPages: number;
+  numLanguages: number;
+  seo: boolean;
+  web: boolean;
+  ads: boolean;
+}
+
+export interface Contact {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
 export interface Budget {
-    numPages: number;
-    numLanguages: number;
-    productSelections: { [key: string]: boolean };
-    name?: string;
-    email?: string;
-    phone?: string;
-    total?: number;
+  selection: Selection;
+  contact: Contact;
+  total?: number;
 }
