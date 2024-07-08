@@ -25,6 +25,7 @@ export class BudgetService {
   }
 
   getBudgets(): Budget[] {
+    console.log(this.budgets());
     return this.budgets();
   }
 }
