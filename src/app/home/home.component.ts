@@ -88,5 +88,6 @@ export class HomeComponent implements OnInit {
       total: this.totalPrice()
     };
     this.budgetService.addBudget(budget);
+    console.log(this.budgetService.getBudgets());
   }
 }
