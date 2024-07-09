@@ -21,7 +21,7 @@ export class BudgetListComponent {
   }
   sortByDate(): void {
 
-    }
+  }
   sortByPrice(): void {
 
   }

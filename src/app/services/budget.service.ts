@@ -27,7 +27,7 @@ export class BudgetService {
   budgets= signal<Budget[]>([]);
 
   addBudget(budget: Budget): void {
-    this.budgets.update(budgets => [ ...budgets, budget ]);
+    this.budgets.update(budgets => [ ...budgets, { ...budget, date: new Date() } ]);
   }
 
   getBudgets(): Signal<Budget[]> {
