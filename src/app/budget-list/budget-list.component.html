@@ -3,28 +3,33 @@
   <div class="col-md-8 mx-auto">
     <div class="card m-3 p-5 rounded-5 shadow fw-bold">
       <div class="row align-items-center">
-        <div class="col-sm-8 text-center text-sm-start">
-          <h4>
+        <div class="col-sm-3 text-center text-sm-start">
+          <h4 class="fs-1">
             <b>{{ budget.contact.name }}</b>
           </h4>
-          <p>{{ budget.contact.email }}</p>
-          <p>{{ budget.contact.phone }}</p>
-          <div>
-            <p><b>Serveis contractats:</b></p>
-            @if (budget.selection.web) {
-            <p>
-              Web ({{ budget.selection.numPages }} pàgines,
-              {{ budget.selection.numLanguages }} llenguatges)
-            </p>
-            } @if (budget.selection.seo) {
-            <p>SEO</p>
-            } @if (budget.selection.ads) {
-            <p>Ads</p>
-            }
-          </div>
+          <p class="text-secondary">{{ budget.contact.email }}</p>
+          <p class="text-secondary">{{ budget.contact.phone }}</p>
         </div>
-        <div class="col-sm-4 text-center">
+        <div class="col-sm-6 text-center text-sm-start">
+          <p><b>Serveis contractats:</b></p>
+            <ul style="list-style-type: disc; padding-left: 20px;">
+              @if (budget.selection.web) {
+                <li>
+                  Web ({{ budget.selection.numPages }} pàgines,
+                  {{ budget.selection.numLanguages }} llenguatges)
+                </li>
+              }
+              @if (budget.selection.seo) {
+                <li>SEO</li>
+              }
+              @if (budget.selection.ads) {
+                <li>Ads</li>
+              }
+            </ul>
+        </div>
+        <div class="col-sm-3 text-center">
           <h2>
+            <p class="text-secondary">Total:</p>
             <b>{{ budget.total }}€</b>
           </h2>
         </div>
