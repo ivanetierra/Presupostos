@@ -24,13 +24,13 @@ export class BudgetService {
     return selectedProductsTotal;
   }
 
-  budgets: Budget[] = [];
+  budgets= signal<Budget[]>([]);
 
   addBudget(budget: Budget): void {
-    this.budgets = [...this.budgets, { ...budget, date: new Date() }];
+    this.budgets.update(budgets => [ ...budgets, budget ]);
   }
 
-  getBudgets(): Budget[] {
+  getBudgets(): Signal<Budget[]> {
     return (this.budgets)
   }
 

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BudgetListComponent {
 
-  budgets: Budget[] = this.budgetService.getBudgets();
+  budgets: Signal<Budget[]> = this.budgetService.getBudgets();
 
   constructor(private budgetService: BudgetService) { }
 
