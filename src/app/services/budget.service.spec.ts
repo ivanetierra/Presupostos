@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { BudgetService } from './budget.service';
+import { Selection } from '../models/budget';
 
 describe('BudgetService', () => {
   let service: BudgetService;
@@ -14,13 +15,15 @@ describe('BudgetService', () => {
   });
 
   it('should calculate the budget correctly when all services are selected', () => {
-    const budget = {
-      productSelections: { seo: true, add: true, web: true },
+    const selection : Selection = {
       numPages: 1,
-      numLanguages: 1
+      numLanguages: 1,
+      seo: true,
+      web: true,
+      ads: true
     };
-    const result = service.calculateTotal(budget);
-    expect(result).toBe(500);
+    const result = service.calculateTotal(selection);
+    expect(result).toBe(1200);
   });
 });
 
