@@ -11,12 +11,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './budget-list.component.scss',
 })
 export class BudgetListComponent {
-  
-  budgets: Signal<Budget[]> = this.budgetService.getBudgets();
+
+  budgets: Budget[] = this.budgetService.getBudgets();
+
   constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
-    
-  }
 
+  }
+  sortByDate(): void {
+
+    }
+  sortByPrice(): void {
+
+  }
+  sortByName(): void {
+
+  }
 }

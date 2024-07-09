@@ -11,27 +11,27 @@ export class BudgetService {
   calculateTotal(selection: Selection): number {
     const products = this.productService.getProducts();
     let selectedProductsTotal = 0;
-    if(selection.ads) selectedProductsTotal += products[0].price; 
-    if(selection.seo) selectedProductsTotal += products[1].price; 
+    if(selection.ads) selectedProductsTotal += products[0].price;
+    if(selection.seo) selectedProductsTotal += products[1].price;
     if(selection.web) {
       selectedProductsTotal += products[2].price;
       const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;
       selectedProductsTotal += extraCost;
-    } 
+    }
 
     console.log("products",products);
 
     return selectedProductsTotal;
   }
 
-  budgets= signal<Budget[]>([]);
-  
+  budgets: Budget[] = [];
+
   addBudget(budget: Budget): void {
-    this.budgets.update(budgets => [...budgets, budget]);
+    this.budgets = [...this.budgets, { ...budget, date: new Date() }];
   }
 
-  getBudgets(): Signal<Budget[]> {
-    return computed(this.budgets)
+  getBudgets(): Budget[] {
+    return (this.budgets)
   }
 
 }

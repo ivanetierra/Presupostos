@@ -16,4 +16,5 @@ export interface Budget {
   selection: Selection;
   contact: Contact;
   total?: number;
+  date?: Date;
 }
