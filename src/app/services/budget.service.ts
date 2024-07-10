@@ -11,8 +11,8 @@ export class BudgetService {
   calculateTotal(selection: Selection): number {
     const products = this.productService.getProducts();
     let selectedProductsTotal = 0;
-    if (selection.ads) selectedProductsTotal += products[0].price;
-    if (selection.seo) selectedProductsTotal += products[1].price;
+    if (selection.seo) selectedProductsTotal += products[0].price;
+    if (selection.ads) selectedProductsTotal += products[1].price;
     if (selection.web) {
       selectedProductsTotal += products[2].price;
       const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;

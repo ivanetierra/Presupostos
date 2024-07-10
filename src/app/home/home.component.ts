@@ -12,6 +12,8 @@ import { Product } from '../models/product';
 import { PanelComponent } from '../panel/panel.component';
 import { Budget, Selection } from '../models/budget';
 
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -37,7 +39,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private budgetService: BudgetService
+    private budgetService: BudgetService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -73,14 +77,15 @@ const checkbox = this.budgetForm.controls[control];
   }
 
   private updateTotalPrice() {
-    const selction: Selection = {
+    const selection: Selection = {
       numPages: this.budgetForm.controls['numPages'].value || 1,
       numLanguages: this.budgetForm.controls['numLanguages'].value || 1,
       seo: this.budgetForm.controls['seo'].value || false,
       web: this.budgetForm.controls['web'].value || false,
       ads: this.budgetForm.controls['ads'].value || false,
     };
-    this.totalPrice.set(this.budgetService.calculateTotal(selction));
+    this.totalPrice.set(this.budgetService.calculateTotal(selection));
+    this.updateUrl();
   }
 
   private resetWebPanel() {
@@ -103,6 +108,38 @@ const checkbox = this.budgetForm.controls[control];
       total: this.totalPrice(),
     };
     this.budgetService.addBudget(budget);
+  }
+
+  updateUrl() {
+    const params: any = {};
+    if (this.budgetForm.controls['seo'].value) {
+      params['seo'] = 'true';
+    } else {
+      params['seo'] = null;
+    }
+    if (this.budgetForm.controls['ads'].value) {
+      params['ads'] = 'true';
+    } else {
+      params['ads'] = null;
+    }
+    if (this.budgetForm.controls['web'].value) {
+      params['web'] = 'true';
+      if (this.budgetForm.controls['numLanguages'].value) {
+        params['numLanguages'] = Number(this.budgetForm.controls['numLanguages'].value);
+      }
+      if (this.budgetForm.controls['numPages'].value) {
+        params['numPages'] = Number(this.budgetForm.controls['numPages'].value);
+      }
+    } else {
+      params['web'] = null;
+      params['numLanguages'] = null;
+      params['numPages'] = null;
+    }
+    this.router.navigate([], {
+      queryParams: params,
+      relativeTo: this.route,
+      queryParamsHandling: 'merge',
+    });
   }
 }
 
