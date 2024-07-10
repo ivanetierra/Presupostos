@@ -20,12 +20,12 @@ export class BudgetListComponent {
 
   }
   sortByDate(): void {
-
+    this.budgetService.sortByDate();
   }
   sortByPrice(): void {
-
+    this.budgetService.sortByPrice();
   }
   sortByName(): void {
-
+    this.budgetService.sortByName();
   }
 }

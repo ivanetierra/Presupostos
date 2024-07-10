@@ -34,4 +34,16 @@ export class BudgetService {
     return (this.budgets)
   }
 
+  sortByDate(): void {
+    this.budgets.update(budgets => budgets.sort((a, b) => b.date!.getTime() - a.date!.getTime()));
+  }
+
+  sortByPrice(): void {
+    this.budgets.update(budgets => budgets.sort((a, b) => b.total! - a.total!));
+  }
+
+  sortByName(): void {
+    this.budgets.update(budgets => budgets.sort((a, b) => a.contact.name!.localeCompare(b.contact.name!)));
+  }
+
 }
