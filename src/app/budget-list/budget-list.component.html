@@ -1,55 +1,64 @@
-<div class="container">
+<div class="container mb-5">
   <hr class="col-sm-10 mx-auto mb-5" style="border-top: 5px dotted #000;">
 
-  @if (budgets().length > 0) {
-    <div class="d-flex justify-content-center mx-4">
-      <h2 class="col-sm-8">Presupostos en curs:</h2>
-    </div>
-
-      <div class="d-flex justify-content-end mx-4 mb-2 me-5">
-        <button (click)="sortByDate()" class="btn btn-link mx-2 btn-text-like">Date</button>
-        <button (click)="sortByPrice()" class="btn btn-link mx-2 btn-text-like">Price</button>
-        <button (click)="sortByName()" class="btn btn-link mx-2 btn-text-like">Name</button>
-      </div>
-
-
-  }
-  @for (budget of budgets(); track $index) {
-  <div class="col-md-8 mx-auto">
-    <div class="card m-3 p-5 rounded-5 shadow fw-bold">
-      <div class="row align-items-center">
-        <div class="col-sm-4 text-center text-sm-start">
-          <h4 class="fs-1">
-            <b>{{ budget.contact.name }}</b>
-          </h4>
-          <p class="text-secondary">{{ budget.contact.email }}</p>
-          <p class="text-secondary">{{ budget.contact.phone }}</p>
-        </div>
-        <div class="col-sm-4 text-center text-sm-start">
-          <p><b>Serveis contractats:</b></p>
-            <ul style="list-style-type: disc; padding-left: 20px;">
-              @if (budget.selection.web) {
-                <li>
-                  Web ({{ budget.selection.numPages }} pàgines,
-                  {{ budget.selection.numLanguages }} llenguatges)
-                </li>
-              }
-              @if (budget.selection.seo) {
-                <li>SEO</li>
-              }
-              @if (budget.selection.ads) {
-                <li>Ads</li>
-              }
-            </ul>
-        </div>
-        <div class="col-sm-4 text-center">
-          <h2>
-            <p class="text-secondary">Total:</p>
-            <b>{{ budget.total }}€</b>
-          </h2>
-        </div>
-      </div>
-    </div>
+  <div class="d-flex justify-content-center mx-4">
+    <h2 class="col-sm-8">Presupostos en curs:</h2>
   </div>
+
+  <div class="d-flex justify-content-end mx-4 mb-2 me-5">
+    <div class="input-group" style="width: auto;">
+      <span class="input-group-text" id="search-addon">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="Buscar por nombre..." (keyup)="filterByName($event)" style="max-width: 200px;">
+    </div>
+    <button (click)="sortByDate()" class="btn btn-link mx-2 btn-text-like">Data</button>
+    <button (click)="sortByPrice()" class="btn btn-link mx-2 btn-text-like">Import</button>
+    <button (click)="sortByName()" class="btn btn-link mx-2 btn-text-like">Nom</button>
+  </div>
+
+  @if (budgets().length > 0) {
+    @for (budget of budgets(); track $index) {
+      <div class="col-md-8 mx-auto">
+        <div class="card m-3 p-5 rounded-5 shadow fw-bold">
+          <div class="row align-items-center">
+            <div class="col-sm-4 text-center text-sm-start">
+              <h4 class="fs-1">
+                <b>{{ budget.contact.name }}</b>
+              </h4>
+              <p class="text-secondary">{{ budget.contact.email }}</p>
+              <p class="text-secondary">{{ budget.contact.phone }}</p>
+            </div>
+            <div class="col-sm-4 text-center text-sm-start">
+              <p><b>Serveis contractats:</b></p>
+              <ul style="list-style-type: disc; padding-left: 20px;">
+                @if (budget.selection.web) {
+                  <li>
+                    Web ({{ budget.selection.numPages }} pàgines,
+                    {{ budget.selection.numLanguages }} llenguatges)
+                  </li>
+                }
+                @if (budget.selection.seo) {
+                  <li>SEO</li>
+                }
+                @if (budget.selection.ads) {
+                  <li>Ads</li>
+                }
+              </ul>
+            </div>
+            <div class="col-sm-4 text-center">
+              <h2>
+                <p class="text-secondary">Total:</p>
+                <b>{{ budget.total }}€</b>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="col-md-8 mx-auto text-center">
+      <p class="text-secondary">No se han encontrado presupuestos</p>
+    </div>
   }
 </div>

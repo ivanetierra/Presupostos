@@ -1,5 +1,5 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { Budget , Selection} from '../models/budget';
+import { Budget, Selection } from '../models/budget';
 import { ProductService } from './product.service';
 
 @Injectable({
@@ -11,27 +11,31 @@ export class BudgetService {
   calculateTotal(selection: Selection): number {
     const products = this.productService.getProducts();
     let selectedProductsTotal = 0;
-    if(selection.ads) selectedProductsTotal += products[0].price;
-    if(selection.seo) selectedProductsTotal += products[1].price;
-    if(selection.web) {
+    if (selection.ads) selectedProductsTotal += products[0].price;
+    if (selection.seo) selectedProductsTotal += products[1].price;
+    if (selection.web) {
       selectedProductsTotal += products[2].price;
       const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;
       selectedProductsTotal += extraCost;
     }
 
-    console.log("products",products);
+    console.log("products", products);
 
     return selectedProductsTotal;
   }
 
-  budgets= signal<Budget[]>([]);
+  budgets = signal<Budget[]>([]);
+  originalBudgets = signal<Budget[]>([]);
+  originalBudgets$ = this.budgets;
 
   addBudget(budget: Budget): void {
-    this.budgets.update(budgets => [ ...budgets, { ...budget, date: new Date() } ]);
+    const newBudget = { ...budget, date: new Date() };
+    this.budgets.update(budgets => [ ...budgets, newBudget ]);
+    this.originalBudgets.update(budgets => [ ...budgets, newBudget ]);
   }
 
   getBudgets(): Signal<Budget[]> {
-    return (this.budgets)
+    return this.budgets;
   }
 
   sortByDate(): void {
@@ -46,4 +50,15 @@ export class BudgetService {
     this.budgets.update(budgets => budgets.sort((a, b) => a.contact.name!.localeCompare(b.contact.name!)));
   }
 
+  filterByName(searchTerm: string): void {
+    const lowerCaseSearchTerm = searchTerm.trim().toLowerCase();
+    if (!lowerCaseSearchTerm) {
+      this.budgets.set(this.originalBudgets());
+      return;
+    }
+
+    this.budgets.update(budgets => this.originalBudgets().filter(budget =>
+      budget.contact.name!.toLowerCase().includes(lowerCaseSearchTerm)
+    ));
+  }
 }

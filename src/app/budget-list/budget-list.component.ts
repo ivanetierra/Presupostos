@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, signal, Signal } from '@angular/core';
 import { Budget } from '../models/budget';
 import { BudgetService } from '../services/budget.service';
 import { CommonModule } from '@angular/common';
@@ -13,12 +13,15 @@ import { CommonModule } from '@angular/common';
 export class BudgetListComponent {
 
   budgets: Signal<Budget[]> = this.budgetService.getBudgets();
+  filteredBudgets = signal<Budget[]>([]);
+
 
   constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
 
   }
+
   sortByDate(): void {
     this.budgetService.sortByDate();
   }
@@ -27,5 +30,9 @@ export class BudgetListComponent {
   }
   sortByName(): void {
     this.budgetService.sortByName();
+  }
+
+  filterByName(event: any): void {
+    this.budgetService.filterByName(event.target.value);
   }
 }
