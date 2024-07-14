@@ -9,20 +9,20 @@ export class BudgetService {
   constructor(private productService: ProductService) { }
 
   calculateTotal(selection: Selection): number {
-    const products = this.productService.getProducts();
-    let selectedProductsTotal = 0;
-    if (selection.seo) selectedProductsTotal += products[0].price;
-    if (selection.ads) selectedProductsTotal += products[1].price;
-    if (selection.web) {
-      selectedProductsTotal += products[2].price;
-      const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;
-      selectedProductsTotal += extraCost;
-    }
+  const products = this.productService.getProducts();
+  let selectedProductsTotal = 0;
+  if (selection.seo) selectedProductsTotal += products[0].price;
+  if (selection.ads) selectedProductsTotal += products[1].price;
+  if (selection.web) {
+    selectedProductsTotal += products[2].price;
+    const extraCost = (selection.numPages - 1 + selection.numLanguages - 1) * 30;
+    selectedProductsTotal += extraCost;
+  }
 
-    console.log("products", products);
+  console.log("products", products);
 
     return selectedProductsTotal;
-  }
+}
 
   budgets = signal<Budget[]>([]);
   originalBudgets = signal<Budget[]>([]);
