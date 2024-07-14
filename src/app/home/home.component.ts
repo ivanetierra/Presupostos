@@ -63,8 +63,9 @@ export class HomeComponent implements OnInit {
   }
 
   changeCheckboxValue(control: string) {
-const checkbox = this.budgetForm.controls[control];
+    const checkbox = this.budgetForm.controls[control];
     checkbox.setValue(!checkbox.value);
+    this.updateTotalPrice();
   }
   onNumPagesChange(pages: number) {
     this.budgetForm.controls['numPages'].setValue(pages);
