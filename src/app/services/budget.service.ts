@@ -19,8 +19,6 @@ export class BudgetService {
     selectedProductsTotal += extraCost;
   }
 
-  console.log("products", products);
-
     return selectedProductsTotal;
 }
 
