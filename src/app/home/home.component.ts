@@ -46,6 +46,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.products = this.productService.getProducts();
+
+    this.route.queryParams.subscribe(params => {
+      this.products.forEach(product => {
+        if (params[product.controlName]) {
+          this.budgetForm.get(product.controlName)?.setValue(params[product.controlName] === 'true');
+        }
+      });
+
+      if (params['numPages']) {
+        this.budgetForm.get('numPages')?.setValue(+params['numPages']);
+      }
+      if (params['numLanguages']) {
+        this.budgetForm.get('numLanguages')?.setValue(+params['numLanguages']);
+      }
+      this.updateTotalPrice();
+    });
+
+
     this.products.forEach((product) => {
       this.budgetForm.addControl(product.controlName, new FormControl(false));
       if (product.controlName === 'web') {
