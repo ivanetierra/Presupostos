@@ -94,9 +94,17 @@ export class HomeComponent implements OnInit {
     this.budgetForm.controls['numPages'].setValue(1);
   }
 
+  validateProductSelection(): boolean {
+    return this.products.some(product => this.budgetForm.get(product.controlName)?.value);
+  }
+
   addBudget(): void {
     this.budgetInfo.markAllAsTouched();
     if (!this.budgetInfo.valid) {
+      return;
+    }
+    if (!this.validateProductSelection()) {
+      alert('Debe seleccionar al menos un producto.');
       return;
     }
     const budget: Budget = {
