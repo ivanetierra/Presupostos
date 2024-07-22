@@ -26,6 +26,8 @@
           budgetForm.controls['web'].value) {
           <app-panel
             (click)="$event.stopPropagation()"
+            [numPages]="budgetForm.controls['numPages'].value"
+            [numLanguages]="budgetForm.controls['numLanguages'].value"
             (numPagesChange)="onNumPagesChange($event)"
             (numLanguagesChange)="onNumLanguagesChange($event)"
           >

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-panel',
@@ -7,37 +7,33 @@ import { Component, EventEmitter, Input, Output, Signal, signal } from '@angular
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent {
-  @Input() numPages: Signal<number> = signal(1);
-  @Input() numLanguages: Signal<number> = signal(1);
+  @Input() numPages: number = 1;
+  @Input() numLanguages: number = 1;
 
   @Output() numPagesChange = new EventEmitter<number>();
   @Output() numLanguagesChange = new EventEmitter<number>();
 
   incrementPages() {
-    const newPages = this.numPages() + 1;
-    this.numPages = signal(newPages);
-    this.numPagesChange.emit(newPages);
+    this.numPages += 1;
+    this.numPagesChange.emit(this.numPages);
   }
 
   decrementPages() {
-    if (this.numPages() > 1) {
-      const newPages = this.numPages() - 1;
-      this.numPages = signal(newPages);
-      this.numPagesChange.emit(newPages);
+    if (this.numPages > 1) {
+      this.numPages -= 1;
+      this.numPagesChange.emit(this.numPages);
     }
   }
 
   incrementLanguages() {
-    const newLanguages = this.numLanguages() + 1;
-    this.numLanguages = signal(newLanguages);
-    this.numLanguagesChange.emit(newLanguages);
+    this.numLanguages += 1;
+    this.numLanguagesChange.emit(this.numLanguages);
   }
 
   decrementLanguages() {
-    if (this.numLanguages() > 1) {
-      const newLanguages = this.numLanguages() - 1;
-      this.numLanguages = signal(newLanguages);
-      this.numLanguagesChange.emit(newLanguages);
+    if (this.numLanguages > 1) {
+      this.numLanguages -= 1;
+      this.numLanguagesChange.emit(this.numLanguages);
     }
   }
 }

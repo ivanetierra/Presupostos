@@ -3,11 +3,11 @@
     <button type="button" data-bs-toggle="modal" data-bs-target="#modal1">
       <i class="bi bi-info-circle"></i>
     </button>
-    <label for="webPages">Nombre de pàgines</label>
+    <label for="numPages">Nombre de pàgines</label>
     <button type="button" (click)="decrementPages()">
       <i class="bi bi-dash-circle"></i>
     </button>
-    <input id="webPages" type="number" [value]="numPages()" min="1" readonly />
+    <input id=" numPages" type="number" [value]="numPages" min="1" readonly />
     <button type="button" (click)="incrementPages()">
       <i class="bi bi-plus-circle"></i>
     </button>
@@ -23,7 +23,7 @@
     <input
       id="numLanguages"
       type="number"
-      [value]="numLanguages()"
+      [value]="numLanguages"
       min="1"
       readonly
     />
@@ -74,7 +74,9 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content text-center">
       <div class="modal-header">
-        <h5 class="modal-title text-center w-100" id="exampleModalLabel">Numero de pagines</h5>
+        <h5 class="modal-title text-center w-100" id="exampleModalLabel">
+          Numero de pagines
+        </h5>
       </div>
       <div class="modal-body">
         Afegeix les pagines que tindra el teu projecte.<br />

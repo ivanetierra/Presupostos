@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -12,6 +12,7 @@ import { PanelComponent } from '../panel/panel.component';
 import { Budget, Selection } from '../models/budget';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { skip, take } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +49,7 @@ export class HomeComponent implements OnInit {
 
     this.initializeFormControls();
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(skip(1), take(1)).subscribe(params => {
       this.updateFormWithQueryParams(params);
       this.updateTotalPrice();
     });
