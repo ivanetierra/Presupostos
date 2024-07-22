@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormGroup,
   FormControl,
   ReactiveFormsModule,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { BudgetService } from '../services/budget.service';
@@ -47,29 +46,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.products = this.productService.getProducts();
 
+    this.initializeFormControls();
+
     this.route.queryParams.subscribe(params => {
-      this.products.forEach(product => {
-        if (params[product.controlName]) {
-          this.budgetForm.get(product.controlName)?.setValue(params[product.controlName] === 'true');
-        }
-      });
-
-      if (params['numPages']) {
-        this.budgetForm.get('numPages')?.setValue(+params['numPages']);
-      }
-      if (params['numLanguages']) {
-        this.budgetForm.get('numLanguages')?.setValue(+params['numLanguages']);
-      }
+      this.updateFormWithQueryParams(params);
       this.updateTotalPrice();
-    });
-
-
-    this.products.forEach((product) => {
-      this.budgetForm.addControl(product.controlName, new FormControl(false));
-      if (product.controlName === 'web') {
-        this.budgetForm.addControl('numPages', new FormControl(1));
-        this.budgetForm.addControl('numLanguages', new FormControl(1));
-      }
     });
 
     this.budgetForm.controls['web'].valueChanges.subscribe((value) => {
@@ -80,11 +61,36 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  initializeFormControls() {
+    this.products.forEach((product) => {
+      this.budgetForm.addControl(product.controlName, new FormControl(false));
+    });
+
+    this.budgetForm.addControl('numPages', new FormControl(1));
+    this.budgetForm.addControl('numLanguages', new FormControl(1));
+  }
+
+  updateFormWithQueryParams(params: any) {
+    this.products.forEach(product => {
+      if (params[product.controlName] !== undefined) {
+        this.budgetForm.get(product.controlName)?.setValue(params[product.controlName] === 'true');
+      }
+    });
+
+    if (params['numPages'] !== undefined) {
+      this.budgetForm.get('numPages')?.setValue(+params['numPages']);
+    }
+    if (params['numLanguages'] !== undefined) {
+      this.budgetForm.get('numLanguages')?.setValue(+params['numLanguages']);
+    }
+  }
+
   changeCheckboxValue(control: string) {
     const checkbox = this.budgetForm.controls[control];
     checkbox.setValue(!checkbox.value);
     this.updateTotalPrice();
   }
+
   onNumPagesChange(pages: number) {
     this.budgetForm.controls['numPages'].setValue(pages);
     this.updateTotalPrice();
@@ -139,29 +145,13 @@ export class HomeComponent implements OnInit {
 
   updateUrl() {
     const params: any = {};
-    if (this.budgetForm.controls['seo'].value) {
-      params['seo'] = 'true';
-    } else {
-      params['seo'] = null;
-    }
-    if (this.budgetForm.controls['ads'].value) {
-      params['ads'] = 'true';
-    } else {
-      params['ads'] = null;
-    }
-    if (this.budgetForm.controls['web'].value) {
-      params['web'] = 'true';
-      if (this.budgetForm.controls['numLanguages'].value) {
-        params['numLanguages'] = Number(this.budgetForm.controls['numLanguages'].value);
-      }
-      if (this.budgetForm.controls['numPages'].value) {
-        params['numPages'] = Number(this.budgetForm.controls['numPages'].value);
-      }
-    } else {
-      params['web'] = null;
-      params['numLanguages'] = null;
-      params['numPages'] = null;
-    }
+    this.products.forEach(product => {
+      params[product.controlName] = this.budgetForm.controls[product.controlName].value ? 'true' : null;
+    });
+
+    params['numPages'] = this.budgetForm.controls['numPages'].value;
+    params['numLanguages'] = this.budgetForm.controls['numLanguages'].value;
+
     this.router.navigate([], {
       queryParams: params,
       relativeTo: this.route,
@@ -169,4 +159,3 @@ export class HomeComponent implements OnInit {
     });
   }
 }
-
